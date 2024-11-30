@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <a href="{% url 'logout' %}" class="btn btn-logout">Logout</a>
+    <div class="tasks-section">
+        <h3>Your Tasks</h3>
+        <a href="{% url 'create_task' %}" class="btn btn-primary">Create New Task</a>
+        <ul class="task-list">
+            {% for task in user.task_set.all %}
+            <li>
+                <div class="task-item">
+                    <h4>{{ task.title }}</h4>
+                    <p>{{ task.description }}</p>
+                    <div class="task-actions">
+                        <a href="{% url 'edit_task' task.id %}" class="btn btn-secondary">Edit</a>
+                        <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </li>
+            {% empty %}
+            <li>No tasks available. Start by creating one!</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
